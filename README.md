@@ -1,10 +1,10 @@
 <!-- markdownlint-disable MD010 MD033 -->
 
-![termlink_demo_nyoom](https://user-images.githubusercontent.com/38729705/163217599-6fecf944-c10e-4546-9669-1c7d047da55e.gif) <sup>*</sup>
-
 # termlink
 
 > Clickable links in the terminal for Go
+
+![termlink_demo_nyoom](https://user-images.githubusercontent.com/38729705/163217599-6fecf944-c10e-4546-9669-1c7d047da55e.gif) <sup>*</sup>
 
 **Termlink is a Go package that allows you to create fully customizable clickable links in the terminal. It is the Go version of Sindre Sorhus' popular [terminal-link](https://github.com/sindresorhus/terminal-link/) library.**
 
