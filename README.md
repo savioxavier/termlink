@@ -4,15 +4,15 @@
 
 > Clickable links in the terminal for Go
 
-**Termlink is a Go package that allows you to craete fully customizable clickable links in the terminal. It is the Go version of Sindre Sorhus' popular [terminal-link](https://github.com/sindresorhus/terminal-link/) library.**
+**Termlink is a Go package that allows you to create fully customizable clickable links in the terminal. It is the Go version of Sindre Sorhus' popular [terminal-link](https://github.com/sindresorhus/terminal-link/) library.**
 
-**It includes multiple features including dynamic links and fully customizable colored links in terminal.**
+**It includes multiple features including dynamic and fully customizable colored links in terminal.**
 
 ## 🛠️ Install
 
 Using `go get`:
 
-```go
+```text
 go get github.com/savioxavier/termlink
 ```
 
@@ -60,7 +60,7 @@ import (
 
 func main() {
 	// With fatih/color package
-	color.Cyan(termlink.Link("Example link using the colors package!", "https://example.com"))
+	color.Cyan(termlink.Link("Example link using the colors package", "https://example.com"))
 }
 ```
 
@@ -90,13 +90,13 @@ More examples can be found in the [`examples/`](examples/) directory.
 
 - **`termlink.SupportsHyperlinks()`**:
 
-- Return `true` if the terminal supports hyperlinks, `false` otherwise.
+  - Returns `true` if the terminal supports hyperlinks, `false` otherwise.
 
 ---
 
 ## ❤️ Support
 
-You can support further development of this bot by **giving it a 🌟** and help me make even better stuff in the future by **buying me a ☕**
+You can support further development of this project by **giving it a 🌟** and help me make even better stuff in the future by **buying me a ☕**
 
 <a href="https://www.buymeacoffee.com/savioxavier">
 <img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" height="50px">
