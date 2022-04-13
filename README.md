@@ -1,5 +1,7 @@
 <!-- markdownlint-disable MD010 MD033 -->
 
+![termlink_demo_nyoom](https://user-images.githubusercontent.com/38729705/163217599-6fecf944-c10e-4546-9669-1c7d047da55e.gif) <sup>*</sup>
+
 # termlink
 
 > Clickable links in the terminal for Go
@@ -64,6 +66,10 @@ func main() {
 }
 ```
 
+> #### Note: For unsupported terminals, the link will be printed in parentheses after the text (see below image)
+> ![image](https://user-images.githubusercontent.com/38729705/163216009-abb81d39-aff0-4fb5-8c5f-da36e241b395.png)
+
+
 ---
 
 ## 🍵 Examples
@@ -112,3 +118,5 @@ You can support further development of this project by **giving it a 🌟** and 
 
 - [terminal-link](https://github.com/sindresorhus/terminal-link) - Sindre Sorhus' original package for providing inspiration for this package.
 - [go-supportscolor](https://github.com/jwalton/go-supportscolor) - A package for detecting terminal color support.
+
+<sub><sup>* The paperclip icon shown in the demo at the top of this README isn't included when you create the link, it's purely for decorative purposes only.</sup></sub>
