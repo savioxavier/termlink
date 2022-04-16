@@ -1,3 +1,4 @@
+// Package termlink implements a set of functions to create customizable, clickable hyperlinks in the terminal.
 package termlink
 
 import (
@@ -136,12 +137,14 @@ func supportsColor() bool {
 	return supportscolor.Stdout().SupportsColor
 }
 
-/**
- * @info Create a clickable link in the terminal's stdout.
- * @param {string} [text] The text to be displayed.
- * @param {string} [url] The URL to be opened when the link is clicked.
- * @returns {string} The clickable link.
- */
+// Function Link creates a clickable link in the terminal's stdout.
+//
+// The function takes two parameters: text and url.
+//
+// The text parameter is the text to be displayed.
+// The url parameter is the URL to be opened when the link is clicked.
+//
+// The function returns the clickable link.
 func Link(text string, url string) string {
 	if supportsHyperlinks() {
 		return "\x1b]8;;" + url + "\x07" + text + "\x1b]8;;\x07" + parseColor("reset")
@@ -150,13 +153,15 @@ func Link(text string, url string) string {
 	}
 }
 
-/**
- * @info Create a clickable link in the terminal's stdout.
- * @param {string} [text] The text to be displayed.
- * @param {string} [url] The URL to be opened when the link is clicked.
- * @param {string} [color] The color of the link.
- * @returns {string} The clickable link.
- */
+// Function LinkColor creates a colored clickable link in the terminal's stdout.
+//
+// The function takes three parameters: text, url and color.
+//
+// The text parameter is the text to be displayed.
+// The url parameter is the URL to be opened when the link is clicked.
+// The color parameter is the color of the link.
+//
+// The function returns the clickable link.
 func ColorLink(text string, url string, color string) string {
 	var textColor string
 
@@ -172,7 +177,9 @@ func ColorLink(text string, url string, color string) string {
 	}
 }
 
-// export supportsHyperlinks to be used in testing
+// Function SupportsHyperlinks returns true if the terminal supports hyperlinks.
+//
+// The function returns true if the terminal supports hyperlinks, false otherwise.
 func SupportsHyperlinks() bool {
 	return supportsHyperlinks()
 }
