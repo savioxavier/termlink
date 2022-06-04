@@ -100,6 +100,18 @@ More examples can be found in the [`examples/`](examples/) directory.
 
 ---
 
+## 🧪 Tests
+
+You can run unit tests _locally_ by running the following command
+
+```bash
+go test -v
+```
+
+Tests can be found in [`termlink_test.go`](./termlink_test.go)
+
+---
+
 ## ❤️ Support
 
 You can support further development of this project by **giving it a 🌟** and help me make even better stuff in the future by **buying me a ☕**
