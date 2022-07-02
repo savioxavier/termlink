@@ -155,12 +155,12 @@ func Link(text string, url string, shouldForce ...bool) string {
 	}
 
 	if shouldForceDefault {
-		return text + " (\u200B" + url + ")" + parseColor("reset")
+		return text + " (" + url + ")" + parseColor("reset")
 	} else {
 		if supportsHyperlinks() {
 			return "\x1b]8;;" + url + "\x07" + text + "\x1b]8;;\x07" + parseColor("reset")
 		}
-		return text + " (\u200B" + url + ")" + parseColor("reset")
+		return text + " (" + url + ")" + parseColor("reset")
 	}
 }
 
@@ -191,12 +191,12 @@ func ColorLink(text string, url string, color string, shouldForce ...bool) strin
 	}
 
 	if shouldForceDefault {
-		return textColor + text + " (\u200B" + url + ")" + parseColor("reset")
+		return textColor + text + " (" + url + ")" + parseColor("reset")
 	} else {
 		if supportsHyperlinks() {
 			return "\x1b]8;;" + url + "\x07" + textColor + text + "\x1b]8;;\x07" + parseColor("reset")
 		}
-		return textColor + text + " (\u200B" + url + ")" + parseColor("reset")
+		return textColor + text + " (" + url + ")" + parseColor("reset")
 	}
 }
 
