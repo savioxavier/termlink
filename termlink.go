@@ -145,10 +145,19 @@ func supportsColor() bool {
 // The url parameter is the URL to be opened when the link is clicked.
 //
 // The function returns the clickable link.
-func Link(text string, url string) string {
-	if supportsHyperlinks() {
-		return "\x1b]8;;" + url + "\x07" + text + "\x1b]8;;\x07" + parseColor("reset")
+func Link(text string, url string, shouldForce ...bool) string {
+	shouldForceDefault := false
+
+	if len(shouldForce) > 0 {
+		shouldForceDefault = shouldForce[0]
+	}
+
+	if shouldForceDefault {
+		return text + " (\u200B" + url + ")" + parseColor("reset")
 	} else {
+		if supportsHyperlinks() {
+			return "\x1b]8;;" + url + "\x07" + text + "\x1b]8;;\x07" + parseColor("reset")
+		}
 		return text + " (\u200B" + url + ")" + parseColor("reset")
 	}
 }
@@ -162,7 +171,7 @@ func Link(text string, url string) string {
 // The color parameter is the color of the link.
 //
 // The function returns the clickable link.
-func ColorLink(text string, url string, color string) string {
+func ColorLink(text string, url string, color string, shouldForce ...bool) string {
 	var textColor string
 
 	if supportsColor() {
@@ -170,9 +179,19 @@ func ColorLink(text string, url string, color string) string {
 	} else {
 		textColor = ""
 	}
-	if supportsHyperlinks() {
-		return "\x1b]8;;" + url + "\x07" + textColor + text + "\x1b]8;;\x07" + parseColor("reset")
+
+	shouldForceDefault := false
+
+	if len(shouldForce) > 0 {
+		shouldForceDefault = shouldForce[0]
+	}
+
+	if shouldForceDefault {
+		return textColor + text + " (\u200B" + url + ")" + parseColor("reset")
 	} else {
+		if supportsHyperlinks() {
+			return "\x1b]8;;" + url + "\x07" + textColor + text + "\x1b]8;;\x07" + parseColor("reset")
+		}
 		return textColor + text + " (\u200B" + url + ")" + parseColor("reset")
 	}
 }
