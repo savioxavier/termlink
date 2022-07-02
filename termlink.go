@@ -139,10 +139,12 @@ func supportsColor() bool {
 
 // Function Link creates a clickable link in the terminal's stdout.
 //
-// The function takes two parameters: text and url.
+// The function takes two required parameters: text and url
+// and one optional parameter: shouldForce
 //
 // The text parameter is the text to be displayed.
 // The url parameter is the URL to be opened when the link is clicked.
+// The shouldForce parameter indicates whether to force the non-hyperlink supported behavior (i.e., text (url))
 //
 // The function returns the clickable link.
 func Link(text string, url string, shouldForce ...bool) string {
@@ -164,11 +166,13 @@ func Link(text string, url string, shouldForce ...bool) string {
 
 // Function LinkColor creates a colored clickable link in the terminal's stdout.
 //
-// The function takes three parameters: text, url and color.
+// The function takes three required parameters: text, url and color
+// and one optional parameter: shouldForce
 //
 // The text parameter is the text to be displayed.
 // The url parameter is the URL to be opened when the link is clicked.
 // The color parameter is the color of the link.
+// The shouldForce parameter indicates whether to force the non-hyperlink supported behavior (i.e., text (url))
 //
 // The function returns the clickable link.
 func ColorLink(text string, url string, color string, shouldForce ...bool) string {
