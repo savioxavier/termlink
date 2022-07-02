@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD010 MD033 -->
+<!-- markdownlint-disable MD010 MD033 MD001 -->
 
 # termlink
 
@@ -67,8 +67,8 @@ func main() {
 ```
 
 > #### Note: For unsupported terminals, the link will be printed in parentheses after the text (see below image)
+>
 > ![image](https://user-images.githubusercontent.com/38729705/163216009-abb81d39-aff0-4fb5-8c5f-da36e241b395.png)
-
 
 ---
 
@@ -80,12 +80,13 @@ More examples can be found in the [`examples/`](examples/) directory.
 
 ## 🔮 Features
 
-- **`termlink.Link(text, url)`**
+- **`termlink.Link(text, url, [shouldForce])`**
 
   - Creates a regular, clickable link in the terminal
   - For unsupported terminals, the link will be printed in parentheses after the text: `Example Link (https://example.com)`.
+  - The `shouldForce` is an optional boolean parameter which allows you to force the above unsupported terminal hyperlinks format `text (url)` to be printed, even in supported terminals
 
-- **`termlink.ColorLink(text, url, color)`**
+- **`termlink.ColorLink(text, url, color, [shouldForce])`**
 
   - Creates a clickable link in the terminal with custom color formatting
   - Examples of color options include:
@@ -93,6 +94,7 @@ More examples can be found in the [`examples/`](examples/) directory.
     - Background only: `bgGreen`, `bgRed`, `bgBlue`, etc.
     - Foreground and background: `green bgRed`, `bgBlue red`, etc.
     - With formatting: `green bold`, `red bgGreen italic`, `italic blue bgGreen`, etc.
+  - The `shouldForce` is an optional boolean parameter which allows you to force the above unsupported terminal hyperlinks format `text (url)` to be printed, even in supported terminals
 
 - **`termlink.SupportsHyperlinks()`**:
 
