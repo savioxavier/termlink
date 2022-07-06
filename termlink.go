@@ -139,30 +139,43 @@ func supportsColor() bool {
 
 // Function Link creates a clickable link in the terminal's stdout.
 //
-// The function takes two parameters: text and url.
+// The function takes two required parameters: text and url
+// and one optional parameter: shouldForce
 //
 // The text parameter is the text to be displayed.
 // The url parameter is the URL to be opened when the link is clicked.
+// The shouldForce parameter indicates whether to force the non-hyperlink supported behavior (i.e., text (url))
 //
 // The function returns the clickable link.
-func Link(text string, url string) string {
-	if supportsHyperlinks() {
-		return "\x1b]8;;" + url + "\x07" + text + "\x1b]8;;\x07" + parseColor("reset")
+func Link(text string, url string, shouldForce ...bool) string {
+	shouldForceDefault := false
+
+	if len(shouldForce) > 0 {
+		shouldForceDefault = shouldForce[0]
+	}
+
+	if shouldForceDefault {
+		return text + " (" + url + ")" + parseColor("reset")
 	} else {
-		return text + " (\u200B" + url + ")" + parseColor("reset")
+		if supportsHyperlinks() {
+			return "\x1b]8;;" + url + "\x07" + text + "\x1b]8;;\x07" + parseColor("reset")
+		}
+		return text + " (" + url + ")" + parseColor("reset")
 	}
 }
 
 // Function LinkColor creates a colored clickable link in the terminal's stdout.
 //
-// The function takes three parameters: text, url and color.
+// The function takes three required parameters: text, url and color
+// and one optional parameter: shouldForce
 //
 // The text parameter is the text to be displayed.
 // The url parameter is the URL to be opened when the link is clicked.
 // The color parameter is the color of the link.
+// The shouldForce parameter indicates whether to force the non-hyperlink supported behavior (i.e., text (url))
 //
 // The function returns the clickable link.
-func ColorLink(text string, url string, color string) string {
+func ColorLink(text string, url string, color string, shouldForce ...bool) string {
 	var textColor string
 
 	if supportsColor() {
@@ -170,10 +183,20 @@ func ColorLink(text string, url string, color string) string {
 	} else {
 		textColor = ""
 	}
-	if supportsHyperlinks() {
-		return "\x1b]8;;" + url + "\x07" + textColor + text + "\x1b]8;;\x07" + parseColor("reset")
+
+	shouldForceDefault := false
+
+	if len(shouldForce) > 0 {
+		shouldForceDefault = shouldForce[0]
+	}
+
+	if shouldForceDefault {
+		return textColor + text + " (" + url + ")" + parseColor("reset")
 	} else {
-		return textColor + text + " (\u200B" + url + ")" + parseColor("reset")
+		if supportsHyperlinks() {
+			return "\x1b]8;;" + url + "\x07" + textColor + text + "\x1b]8;;\x07" + parseColor("reset")
+		}
+		return textColor + text + " (" + url + ")" + parseColor("reset")
 	}
 }
 
