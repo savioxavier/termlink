@@ -4,6 +4,11 @@
 
 > Clickable links in the terminal for Go
 
+[![Release](https://img.shields.io/github/release/savioxavier/termlink.svg)](https://github.com/savioxavier/termlink/releases/latest)
+[![Go Reference](https://pkg.go.dev/badge/github.com/savioxavier/termlink.svg)](https://pkg.go.dev/github.com/savioxavier/termlink)
+[![License](https://img.shields.io/github/license/savioxavier/termlink)](/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/savioxavier/termlink)](https://goreportcard.com/report/github.com/savioxavier/termlink)
+
 ![termlink_demo_nyoom](https://user-images.githubusercontent.com/38729705/163217599-6fecf944-c10e-4546-9669-1c7d047da55e.gif) <sup>*</sup>
 
 **Termlink is a Go package that allows you to create fully customizable clickable links in the terminal. It is the Go version of Sindre Sorhus' popular [terminal-link](https://github.com/sindresorhus/terminal-link/) library.**
