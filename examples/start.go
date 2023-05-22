@@ -3,15 +3,13 @@ package main
 import (
 	"fmt"
 
-	"github.com/fatih/color"
 	"github.com/savioxavier/termlink"
 )
 
-func main() {
+func printExample() {
 	name := "John"
 	age := 21
 
-	// With regular termlink package
 	fmt.Printf(
 		`
 		Hello I'm %s.
@@ -23,9 +21,10 @@ func main() {
 		name,
 		age,
 		termlink.Link("Twitter", "https://twitter.com"),
-		termlink.ColorLink("@twitter", "https://twitter.com/twitter", "italic green"),
+		termlink.ColorLink("@twitter", "https://twitter.com/twitter", "italic cyan"),
 	)
+}
 
-	// With fatih/color package
-	color.Cyan(termlink.Link("Example link using the colors package!", "https://example.com"))
+func main() {
+	printExample()
 }
