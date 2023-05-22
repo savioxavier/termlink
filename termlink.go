@@ -57,25 +57,29 @@ func supportsHyperlinks() bool {
 	return false
 }
 
-var colorsList = map[string]string{
-	"black":     "30",
-	"red":       "31",
-	"green":     "32",
-	"yellow":    "33",
-	"blue":      "34",
-	"magenta":   "35",
-	"cyan":      "36",
-	"white":     "37",
-	"bold":      "1",
-	"italic":    "3",
-	"bgBlack":   "40",
-	"bgRed":     "41",
-	"bgGreen":   "42",
-	"bgYellow":  "43",
-	"bgBlue":    "44",
-	"bgMagenta": "45",
-	"bgCyan":    "46",
-	"bgWhite":   "47",
+var colorsList = map[string]int{
+	"reset":     0,
+	"bold":      1,
+	"dim":       2,
+	"italic":    3,
+	"underline": 4,
+	"blink":     5,
+	"black":     30,
+	"red":       31,
+	"green":     32,
+	"yellow":    33,
+	"blue":      34,
+	"magenta":   35,
+	"cyan":      36,
+	"white":     37,
+	"bgBlack":   40,
+	"bgRed":     41,
+	"bgGreen":   42,
+	"bgYellow":  43,
+	"bgBlue":    44,
+	"bgMagenta": 45,
+	"bgCyan":    46,
+	"bgWhite":   47,
 }
 
 func isInList(list []string, value string) bool {
@@ -87,6 +91,14 @@ func isInList(list []string, value string) bool {
 	return false
 }
 
+var colors []string
+
+func addColor(value string) []string {
+	colors = append(colors, fmt.Sprint(colorsList[value]))
+
+	return colors
+}
+
 func parseColor(color string) string {
 	acceptedForegroundColors := []string{"black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"}
 
@@ -96,31 +108,30 @@ func parseColor(color string) string {
 		return ""
 	}
 
-	var colors []string
 	for _, c := range strings.Split(color, " ") {
 		if c == "" {
 			continue
 		}
 		if c == "bold" {
-			colors = append(colors, colorsList["bold"])
+			colors = addColor("bold")
 		} else if c == "italic" {
-			colors = append(colors, colorsList["italic"])
+			colors = addColor("italic")
 		} else if c == "underline" {
-			colors = append(colors, colorsList["underline"])
+			colors = addColor("underline")
 		} else if c == "blink" {
-			colors = append(colors, colorsList["blink"])
+			colors = addColor("blink")
 		} else if c == "reverse" {
-			colors = append(colors, colorsList["reverse"])
+			colors = addColor("reverse")
 		} else if c == "hidden" {
-			colors = append(colors, colorsList["hidden"])
+			colors = addColor("hidden")
 		} else if c == "strike" {
-			colors = append(colors, colorsList["strike"])
+			colors = addColor("strike")
 		} else if isInList(acceptedForegroundColors, c) {
-			colors = append(colors, colorsList[c])
+			colors = addColor(c)
 		} else if isInList(acceptedBackgroundColors, c) {
-			colors = append(colors, colorsList[c])
+			colors = addColor(c)
 		} else if c == "reset" {
-			colors = append(colors, colorsList["reset"])
+			colors = addColor("reset")
 		} else {
 			return ""
 		}
