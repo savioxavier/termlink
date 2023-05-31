@@ -99,46 +99,34 @@ func addColor(value string) []string {
 	return colors
 }
 
+func isValidColor(color string) bool {
+	// Create a slice with keys of the colorsList map
+	keys := make([]string, len(colorsList))
+
+	i := 0
+	for k := range colorsList {
+		keys[i] = k
+		i++
+	}
+
+	// Check if the color is in the keys slice
+	return isInList(keys, color)
+}
+
 func parseColor(color string) string {
-	acceptedForegroundColors := []string{"black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"}
-
-	acceptedBackgroundColors := []string{"bgBlack", "bgRed", "bgGreen", "bgYellow", "bgBlue", "bgMagenta", "bgCyan", "bgWhite"}
-
+	// If nothing is provided, return empty string
 	if color == "" {
 		return ""
 	}
 
 	for _, c := range strings.Split(color, " ") {
-		if c == "" {
+		// If the color doesn't exist, skip and go to the next word
+		if !isValidColor(c) {
 			continue
 		}
-		if c == "bold" {
-			colors = addColor("bold")
-		} else if c == "italic" {
-			colors = addColor("italic")
-		} else if c == "underline" {
-			colors = addColor("underline")
-		} else if c == "blink" {
-			colors = addColor("blink")
-		} else if c == "reverse" {
-			colors = addColor("reverse")
-		} else if c == "hidden" {
-			colors = addColor("hidden")
-		} else if c == "strike" {
-			colors = addColor("strike")
-		} else if isInList(acceptedForegroundColors, c) {
-			colors = addColor(c)
-		} else if isInList(acceptedBackgroundColors, c) {
-			colors = addColor(c)
-		} else if c == "reset" {
-			colors = addColor("reset")
-		} else {
-			return ""
-		}
-	}
 
-	if len(colors) == 0 {
-		return ""
+		// Add the color, if present in colorsList
+		addColor(c)
 	}
 
 	return "\u001b[" + strings.Join(colors, ";") + "m"
@@ -209,6 +197,7 @@ func ColorLink(text string, url string, color string, shouldForce ...bool) strin
 		}
 		return textColor + text + " (" + url + ")" + parseColor("reset")
 	}
+
 }
 
 // Function SupportsHyperlinks returns true if the terminal supports hyperlinks.
