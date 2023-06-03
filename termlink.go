@@ -78,13 +78,25 @@ func matchAllEnvs(envList map[string][]string) bool {
 func supportsHyperlinks() bool {
 	if hasEnv("VTE_VERSION") {
 		// VTE-based terminals above v0.50 (Gnome Terminal, Guake, ROXTerm, etc)
-		major, minor, patch := parseVersion(os.Getenv("VTE_VERSION"))
-		if major >= 5000 && minor >= 50 && patch >= 50 {
+		major, minor, patch := parseVersion(getEnv("VTE_VERSION"))
+		// 0.50.0 was supposed to support hyperlinks, but throws a segfault
+		if major >= 0 && minor >= 50 && patch > 0 {
 			return true
 		}
 	}
 
-	return checkAllEnvs(EnvironmentVariables) || matchAllEnvs(ValueSpecificEnvironmentVariables)
+	if matchesEnv("TERM_PROGRAM", []string{"vscode"}) {
+		major, minor, _ := parseVersion(getEnv("TERM_PROGRAM_VERSION"))
+		if major > 1 || (major == 1 && minor >= 72) {
+			return true
+		}
+	}
+
+	if checkAllEnvs(EnvironmentVariables) || matchAllEnvs(ValueSpecificEnvironmentVariables) {
+		return true
+	}
+
+	return false
 }
 
 var colorsList = map[string]int{
