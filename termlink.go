@@ -15,17 +15,36 @@ func parseVersion(version string) (int, int, int) {
 	return major, minor, patch
 }
 
-func supportsHyperlinks() bool {
-	if os.Getenv("FORCE_HYPERLINK") != "" {
-		return true
-	}
+func hasEnv(name string) bool {
+	_, envExists := os.LookupEnv(name)
 
-	if os.Getenv("DOMTERM") != "" {
+	return envExists
+}
+
+func getEnv(name string) string {
+	envValue, _ := os.LookupEnv(name)
+
+	return envValue
+}
+
+func matchesEnv(name string, subNames []string) bool {
+	if hasEnv(name) {
+		for _, subName := range subNames {
+			if getEnv(name) == subName {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func supportsHyperlinks() bool {
+	if hasEnv("DOMTERM") {
 		// DomTerm
 		return true
 	}
 
-	if os.Getenv("VTE_VERSION") != "" {
+	if hasEnv("VTE_VERSION") {
 		// VTE-based terminals above v0.50 (Gnome Terminal, Guake, ROXTerm, etc)
 		major, minor, patch := parseVersion(os.Getenv("VTE_VERSION"))
 		if major >= 5000 && minor >= 50 && patch >= 50 {
@@ -33,16 +52,11 @@ func supportsHyperlinks() bool {
 		}
 	}
 
-	if os.Getenv("TERM_PROGRAM") != "" {
-		if os.Getenv("TERM_PROGRAM") == "Hyper" ||
-			os.Getenv("TERM_PROGRAM") == "iTerm.app" ||
-			os.Getenv("TERM_PROGRAM") == "terminology" ||
-			os.Getenv("TERM_PROGRAM") == "WezTerm" {
-			return true
-		}
+	if matchesEnv("TERM_PROGRAM", []string{"iTerm.app", "terminology", "WezTerm", "Hyper"}) {
+		return true
 	}
 
-	if os.Getenv("TERM") != "" {
+	if hasEnv("TERM") {
 		// Kitty
 		if os.Getenv("TERM") == "xterm-kitty" {
 			return true
