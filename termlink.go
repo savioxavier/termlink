@@ -9,6 +9,24 @@ import (
 	"github.com/jwalton/go-supportscolor"
 )
 
+var EnvironmentVariables = []string{
+	"DOMTERM",
+	"WT_SESSION",
+	"KONSOLE_VERSION",
+}
+
+var ValueSpecificEnvironmentVariables = map[string][]string{
+	"TERM_PROGRAM": []string{
+		"iTerm.app",
+		"terminology",
+		"WezTerm",
+		"Hyper",
+	},
+	"TERM": []string{
+		"xterm-kitty",
+	},
+}
+
 func parseVersion(version string) (int, int, int) {
 	var major, minor, patch int
 	fmt.Sscanf(version, "%d.%d.%d", &major, &minor, &patch)
@@ -19,6 +37,16 @@ func hasEnv(name string) bool {
 	_, envExists := os.LookupEnv(name)
 
 	return envExists
+}
+
+func checkAllEnvs(vars []string) bool {
+	for _, v := range vars {
+		if hasEnv(v) {
+			return true
+		}
+	}
+
+	return false
 }
 
 func getEnv(name string) string {
@@ -38,12 +66,16 @@ func matchesEnv(name string, subNames []string) bool {
 	return false
 }
 
-func supportsHyperlinks() bool {
-	if hasEnv("DOMTERM") {
-		// DomTerm
-		return true
+func matchAllEnvs(envList map[string][]string) bool {
+	for key, value := range envList {
+		if matchesEnv(key, value) {
+			return true
+		}
 	}
+	return false
+}
 
+func supportsHyperlinks() bool {
 	if hasEnv("VTE_VERSION") {
 		// VTE-based terminals above v0.50 (Gnome Terminal, Guake, ROXTerm, etc)
 		major, minor, patch := parseVersion(os.Getenv("VTE_VERSION"))
@@ -52,23 +84,7 @@ func supportsHyperlinks() bool {
 		}
 	}
 
-	if matchesEnv("TERM_PROGRAM", []string{"iTerm.app", "terminology", "WezTerm", "Hyper"}) {
-		return true
-	}
-
-	if hasEnv("TERM") {
-		// Kitty
-		if os.Getenv("TERM") == "xterm-kitty" {
-			return true
-		}
-	}
-
-	// Windows Terminal and Konsole
-	if os.Getenv("WT_SESSION") != "" || os.Getenv("KONSOLE_VERSION") != "" {
-		return true
-	}
-
-	return false
+	return checkAllEnvs(EnvironmentVariables) || matchAllEnvs(ValueSpecificEnvironmentVariables)
 }
 
 var colorsList = map[string]int{
