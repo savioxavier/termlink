@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
-	"github.com/jwalton/go-supportscolor"
 )
 
 var EnvironmentVariables = []string{
@@ -183,10 +181,6 @@ func parseColor(color string) string {
 	return "\u001b[" + strings.Join(colors, ";") + "m"
 }
 
-func supportsColor() bool {
-	return supportscolor.Stdout().SupportsColor
-}
-
 // Function Link creates a clickable link in the terminal's stdout.
 //
 // The function takes two required parameters: text and url
@@ -226,13 +220,7 @@ func Link(text string, url string, shouldForce ...bool) string {
 //
 // The function returns the clickable link.
 func ColorLink(text string, url string, color string, shouldForce ...bool) string {
-	var textColor string
-
-	if supportsColor() {
-		textColor = parseColor(color)
-	} else {
-		textColor = ""
-	}
+	textColor := parseColor(color)
 
 	shouldForceDefault := false
 
