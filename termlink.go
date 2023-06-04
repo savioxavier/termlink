@@ -97,6 +97,10 @@ func supportsHyperlinks() bool {
 		return true
 	}
 
+	if matchesEnv("COLORTERM", []string{"xfce4-terminal"}) {
+		return true
+	}
+
 	if checkAllEnvs(EnvironmentVariables) {
 		return true
 	}
