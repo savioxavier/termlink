@@ -55,9 +55,15 @@ func getEnv(name string) string {
 
 func supportsHyperlinks() bool {
 	if hasEnv("VTE_VERSION") {
-		// VTE-based terminals above v0.50 (Gnome Terminal, Guake, ROXTerm, etc)
+		// VTE-based terminals (Gnome Terminal, Guake, ROXTerm, etc)
+		// VTE_VERSION is rendered as four-digit version string
+		// eg: 0.52.2 => 5202
+		// parseVersion will parse it with a standalone major segment
+		// with minor and patch segments set to 0
+		// 0.50.0 (parsed as 5000) was supposed to support hyperlinks, but throws a segfault
+		// so we check if the "major" version is greater than 5000 (5000 exclusive)
 		v := parseVersion(getEnv("VTE_VERSION"))
-		return v.major >= 0 && v.minor >= 50 && v.patch > 0
+		return v.major > 5000
 	}
 
 	if hasEnv("TERM_PROGRAM") {
