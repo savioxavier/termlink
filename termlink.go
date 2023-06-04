@@ -53,6 +53,17 @@ func getEnv(name string) string {
 	return envValue
 }
 
+func matchesEnv(name string, values []string) bool {
+	if hasEnv(name) {
+		for _, value := range values {
+			if getEnv(name) == value {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func supportsHyperlinks() bool {
 	if hasEnv("VTE_VERSION") {
 		// VTE-based terminals (Gnome Terminal, Guake, ROXTerm, etc)
@@ -80,6 +91,10 @@ func supportsHyperlinks() bool {
 		case "vscode":
 			return v.major > 1 || (v.major == 1 && v.minor >= 72)
 		}
+	}
+
+	if matchesEnv("TERM", []string{"xterm-kitty", "alacritty", "alacritty-direct"}) {
+		return true
 	}
 
 	if checkAllEnvs(EnvironmentVariables) {
