@@ -15,22 +15,20 @@ var EnvironmentVariables = []string{
 	"KONSOLE_VERSION",
 }
 
-var ValueSpecificEnvironmentVariables = map[string][]string{
-	"TERM_PROGRAM": []string{
-		"iTerm.app",
-		"terminology",
-		"WezTerm",
-		"Hyper",
-	},
-	"TERM": []string{
-		"xterm-kitty",
-	},
+type Version struct {
+	major int
+	minor int
+	patch int
 }
 
-func parseVersion(version string) (int, int, int) {
+func parseVersion(version string) Version {
 	var major, minor, patch int
 	fmt.Sscanf(version, "%d.%d.%d", &major, &minor, &patch)
-	return major, minor, patch
+	return Version{
+		major: major,
+		minor: minor,
+		patch: patch,
+	}
 }
 
 func hasEnv(name string) bool {
@@ -55,44 +53,30 @@ func getEnv(name string) string {
 	return envValue
 }
 
-func matchesEnv(name string, subNames []string) bool {
-	if hasEnv(name) {
-		for _, subName := range subNames {
-			if getEnv(name) == subName {
-				return true
-			}
-		}
-	}
-	return false
-}
-
-func matchAllEnvs(envList map[string][]string) bool {
-	for key, value := range envList {
-		if matchesEnv(key, value) {
-			return true
-		}
-	}
-	return false
-}
-
 func supportsHyperlinks() bool {
 	if hasEnv("VTE_VERSION") {
 		// VTE-based terminals above v0.50 (Gnome Terminal, Guake, ROXTerm, etc)
-		major, minor, patch := parseVersion(getEnv("VTE_VERSION"))
-		// 0.50.0 was supposed to support hyperlinks, but throws a segfault
-		if major >= 0 && minor >= 50 && patch > 0 {
-			return true
+		v := parseVersion(getEnv("VTE_VERSION"))
+		return v.major >= 0 && v.minor >= 50 && v.patch > 0
+	}
+
+	if hasEnv("TERM_PROGRAM") {
+		v := parseVersion(getEnv("TERM_PROGRAM_VERSION"))
+
+		switch term := getEnv("TERM_PROGRAM"); term {
+		case "iTerm.app":
+			if v.major == 3 {
+				return v.minor >= 1
+			}
+			return v.major > 3
+		case "WezTerm":
+			return v.major >= 20200620
+		case "vscode":
+			return v.major > 1 || (v.major == 1 && v.minor >= 72)
 		}
 	}
 
-	if matchesEnv("TERM_PROGRAM", []string{"vscode"}) {
-		major, minor, _ := parseVersion(getEnv("TERM_PROGRAM_VERSION"))
-		if major > 1 || (major == 1 && minor >= 72) {
-			return true
-		}
-	}
-
-	if checkAllEnvs(EnvironmentVariables) || matchAllEnvs(ValueSpecificEnvironmentVariables) {
+	if checkAllEnvs(EnvironmentVariables) {
 		return true
 	}
 
