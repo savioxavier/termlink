@@ -63,6 +63,14 @@ func matchesEnv(name string, values []string) bool {
 }
 
 func supportsHyperlinks() bool {
+	// Allow hyperlinks to be forced, even if this function
+	// Instead of checking whether it is equal to anything other than "0",
+	// a set of allowed values are provided, as something like
+	// FORCE_HYPERLINK="do-not-enable-it" wouldn't make sense if it returned true
+	if matchesEnv("FORCE_HYPERLINK", []string{"1", "true", "always", "enabled"}) {
+		return true
+	}
+
 	if hasEnv("VTE_VERSION") {
 		// VTE-based terminals (Gnome Terminal, Guake, ROXTerm, etc)
 		// VTE_VERSION is rendered as four-digit version string
