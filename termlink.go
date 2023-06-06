@@ -112,9 +112,15 @@ func supportsHyperlinks() bool {
 			}
 			return v.major > 3
 		case "WezTerm":
+			// Even though WezTerm's version is something like 20200620-160318-e00b076c
+			// parseVersion will still parse it with a standalone major segment (ie: 20200620)
+			// with minor and patch segments set to 0
 			return v.major >= 20200620
 		case "vscode":
 			return v.major > 1 || (v.major == 1 && v.minor >= 72)
+
+			// Hyper Terminal used to be included in this list, and it even supports hyperlinks
+			// but the hyperlinks are pseudo-hyperlinks and are actually not clickable
 		}
 	}
 
