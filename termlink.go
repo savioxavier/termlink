@@ -188,6 +188,12 @@ func addColor(value string) []string {
 	return colors
 }
 
+// clearSlice clears a string slice by re-slicing it to have a length of 0
+func clearSlice(slice []string) []string {
+	slice = slice[:0]
+	return slice
+}
+
 // isValidColor checks if a given color string is a valid key in a map of predefined colors
 func isValidColor(color string) bool {
 	// Create a slice with keys of the colorsList map
@@ -206,12 +212,17 @@ func isValidColor(color string) bool {
 // parseColor yields a set of ANSI color codes, based on the "color" string.
 // The color codes are parsed from the colorsList map
 func parseColor(color string) string {
+	// Clear the colors slice first
+	colors = clearSlice(colors)
+
 	// If nothing is provided, return empty string
 	if color == "" {
 		return ""
 	}
 
-	for _, c := range strings.Split(color, " ") {
+	colorNames := strings.Split(color, " ")
+
+	for _, c := range colorNames {
 		// If the color doesn't exist, skip and go to the next word
 		if !isValidColor(c) {
 			continue
@@ -219,6 +230,7 @@ func parseColor(color string) string {
 
 		// Add the color, if present in colorsList
 		addColor(c)
+
 	}
 
 	return "\u001b[" + strings.Join(colors, ";") + "m"
@@ -246,12 +258,12 @@ func Link(text string, url string, shouldForce ...bool) string {
 	}
 
 	if shouldForceDefault {
-		return text + " (" + url + ")" + parseColor("reset")
+		return text + " (" + url + ")" + "\u001b[0m"
 	} else {
 		if supportsHyperlinks() {
-			return "\x1b]8;;" + url + "\x07" + text + "\x1b]8;;\x07" + parseColor("reset")
+			return "\x1b]8;;" + url + "\x07" + text + "\x1b]8;;\x07" + "\u001b[0m"
 		}
-		return text + " (" + url + ")" + parseColor("reset")
+		return text + " (" + url + ")" + "\u001b[0m"
 	}
 }
 
@@ -279,12 +291,12 @@ func ColorLink(text string, url string, color string, shouldForce ...bool) strin
 	}
 
 	if shouldForceDefault {
-		return textColor + text + " (" + url + ")" + parseColor("reset")
+		return textColor + text + " (" + url + ")" + "\u001b[0m"
 	} else {
 		if supportsHyperlinks() {
-			return "\x1b]8;;" + url + "\x07" + textColor + text + "\x1b]8;;\x07" + parseColor("reset")
+			return "\x1b]8;;" + url + "\x07" + textColor + text + "\x1b]8;;\x07" + "\u001b[0m"
 		}
-		return textColor + text + " (" + url + ")" + parseColor("reset")
+		return textColor + text + " (" + url + ")" + "\u001b[0m"
 	}
 
 }
