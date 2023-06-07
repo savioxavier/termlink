@@ -48,8 +48,14 @@ Also, here are some other links to help you out:
 	)
 }
 
+func printGoodbye() {
+	fmt.Println()
+	fmt.Println("👋 Goodbye!")
+}
+
 func main() {
 	printSupportsHyperlinks()
 	printExample()
 	printHelpLinks()
+	printGoodbye()
 }
