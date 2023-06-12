@@ -86,7 +86,8 @@ func main() {
 }
 ```
 
-> #### Note: For unsupported terminals, the link will be printed in parentheses after the text (see below image)
+> **Note**
+> **For unsupported terminals, the link will be printed in parentheses after the text (see below image)**
 >
 > ![image](https://user-images.githubusercontent.com/38729705/163216009-abb81d39-aff0-4fb5-8c5f-da36e241b395.png)
 
