@@ -125,6 +125,15 @@ go run examples/start.go
     - With formatting: `green bold`, `red bgGreen italic`, `italic blue bgGreen`, etc.
   - The `shouldForce` is an optional boolean parameter which allows you to force the above unsupported terminal hyperlinks format `text (url)` to be printed, even in supported terminals
 
+> `shouldForce` can be used in the following manner:
+>
+> ```go
+> termlink.Link(text, url, true)
+> termlink.ColorLink(text, url, color, true)
+> ```
+>
+> You don't always need to specify this argument. By default, this parameter is `false`
+
 - **`termlink.SupportsHyperlinks()`**:
 
   - Returns `true` if the terminal supports hyperlinks, `false` otherwise.
