@@ -136,6 +136,6 @@ You can support further development of this project by **giving it a 🌟** and 
 ## 💫 Attributions and special thanks
 
 - [terminal-link](https://github.com/sindresorhus/terminal-link) - Sindre Sorhus' original package for providing inspiration for this package.
-- [go-supportscolor](https://github.com/jwalton/go-supportscolor) - A package for detecting terminal color support.
+- [supports-hyperlinks](https://github.com/zkat/supports-hyperlinks) - Zkat's package for additional hyperlink handling support.
 
 <sub><sup>* The paperclip icon shown in the demo at the top of this README isn't included when you create the link, it's purely for decorative purposes only.</sup></sub>
