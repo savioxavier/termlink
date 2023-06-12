@@ -96,7 +96,7 @@ func main() {
 
 More examples can be found in the [`examples/`](examples/) directory.
 
-For a quick start, execute the following in your terminal
+For a quick demo, execute the following commands in your terminal:
 
 ```bash
 git clone https://github.com/savioxavier/termlink.git
@@ -142,7 +142,7 @@ go run examples/start.go
 
 ## 🧪 Tests
 
-You can run unit tests _locally_ by running the following command
+You can run unit tests _locally_ by running the following command:
 
 ```bash
 go test -v
