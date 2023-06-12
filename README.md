@@ -13,7 +13,7 @@
 
 **Termlink is a Go package that allows you to create fully customizable clickable links in the terminal. It is the Go version of Sindre Sorhus' popular [terminal-link](https://github.com/sindresorhus/terminal-link/) library.**
 
-**It includes multiple features including dynamic and fully customizable colored links in terminal.**
+**It includes multiple features including dynamic and fully customizable colored links in terminal, along with smart hyperlink support detection.**
 
 ## 🛠️ Install
 
@@ -55,7 +55,22 @@ func main() {
 }
 ```
 
-- You can also use this package in combination with another popular Go package [fatih/color](https://github.com/fatih/color)
+- Check if your current terminal supports hyperlinks:
+
+```go
+import (
+	"fmt"
+
+	"github.com/savioxavier/termlink"
+)
+
+func main() {
+	fmt.Println(termlink.SupportsHyperlinks())
+	// prints either true or false, depending on your terminal
+}
+```
+
+- Since `termlink.Link` returns a string, you can use it with your favorite text color formatting libraries such as [fatih/color](https://github.com/fatih/color), [mgutz/ansi](https://github.com/mgutz/ansi), etc. Alternatively, you can use `termlink.ColorLink` as well.
 
 ```go
 import (
@@ -67,11 +82,12 @@ import (
 
 func main() {
 	// With fatih/color package
-	color.Cyan(termlink.Link("Example link using the colors package", "https://example.com"))
+	color.Cyan(termlink.Link("Example link using the fatih/color package", "https://example.com"))
 }
 ```
 
-> #### Note: For unsupported terminals, the link will be printed in parentheses after the text (see below image)
+> **Note**
+> **For unsupported terminals, the link will be printed in parentheses after the text (see below image)**
 >
 > ![image](https://user-images.githubusercontent.com/38729705/163216009-abb81d39-aff0-4fb5-8c5f-da36e241b395.png)
 
@@ -80,6 +96,15 @@ func main() {
 ## 🍵 Examples
 
 More examples can be found in the [`examples/`](examples/) directory.
+
+For a quick demo, execute the following commands in your terminal:
+
+```bash
+git clone https://github.com/savioxavier/termlink.git
+cd termlink/
+go get github.com/savioxavier/termlink
+go run examples/start.go
+```
 
 ---
 
@@ -101,6 +126,15 @@ More examples can be found in the [`examples/`](examples/) directory.
     - With formatting: `green bold`, `red bgGreen italic`, `italic blue bgGreen`, etc.
   - The `shouldForce` is an optional boolean parameter which allows you to force the above unsupported terminal hyperlinks format `text (url)` to be printed, even in supported terminals
 
+> `shouldForce` can be used in the following manner:
+>
+> ```go
+> termlink.Link(text, url, true)
+> termlink.ColorLink(text, url, color, true)
+> ```
+>
+> You don't always need to specify this argument. By default, this parameter is `false`
+
 - **`termlink.SupportsHyperlinks()`**:
 
   - Returns `true` if the terminal supports hyperlinks, `false` otherwise.
@@ -109,7 +143,7 @@ More examples can be found in the [`examples/`](examples/) directory.
 
 ## 🧪 Tests
 
-You can run unit tests _locally_ by running the following command
+You can run unit tests _locally_ by running the following command:
 
 ```bash
 go test -v
@@ -136,6 +170,6 @@ You can support further development of this project by **giving it a 🌟** and 
 ## 💫 Attributions and special thanks
 
 - [terminal-link](https://github.com/sindresorhus/terminal-link) - Sindre Sorhus' original package for providing inspiration for this package.
-- [go-supportscolor](https://github.com/jwalton/go-supportscolor) - A package for detecting terminal color support.
+- [supports-hyperlinks](https://github.com/zkat/supports-hyperlinks) - Zkat's package for additional hyperlink handling support.
 
 <sub><sup>* The paperclip icon shown in the demo at the top of this README isn't included when you create the link, it's purely for decorative purposes only.</sup></sub>

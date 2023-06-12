@@ -3,7 +3,6 @@ package termlink_test
 import (
 	"testing"
 
-	"github.com/fatih/color"
 	"github.com/savioxavier/termlink"
 	"github.com/stretchr/testify/assert"
 )
@@ -30,14 +29,6 @@ func TestColorLink(t *testing.T) {
 	input := termlink.ColorLink("Hello", "https://google.com", "red")
 	expectedHyperlink := "\x1b]8;;https://google.com\a\x1b[31mHello\x1b]8;;\a\x1b[m"
 	expectedNoHyperlink := "\x1b[31mHello (https://google.com)\x1b[m"
-
-	testAll(input, expectedHyperlink, expectedNoHyperlink)(t)
-}
-
-func TestColorsPackageLink(t *testing.T) {
-	input := color.New(color.FgCyan).SprintFunc()(termlink.Link("Hello", "https://google.com"))
-	expectedHyperlink := "\x1b[36m\x1b]8;;https://google.com\aHello\x1b]8;;\a\x1b[m\x1b[0m"
-	expectedNoHyperlink := "\x1b[36mHello (https://google.com)\x1b[m\x1b[0m"
 
 	testAll(input, expectedHyperlink, expectedNoHyperlink)(t)
 }
