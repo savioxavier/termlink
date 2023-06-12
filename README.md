@@ -13,7 +13,7 @@
 
 **Termlink is a Go package that allows you to create fully customizable clickable links in the terminal. It is the Go version of Sindre Sorhus' popular [terminal-link](https://github.com/sindresorhus/terminal-link/) library.**
 
-**It includes multiple features including dynamic and fully customizable colored links in terminal.**
+**It includes multiple features including dynamic and fully customizable colored links in terminal, along with smart hyperlink support detection.**
 
 ## 🛠️ Install
 
@@ -52,6 +52,21 @@ import (
 
 func main() {
 	fmt.Println(termlink.ColorLink("Example", "https://example.com", "italic green"))
+}
+```
+
+- Check if your current terminal supports hyperlinks:
+
+```go
+import (
+	"fmt"
+
+	"github.com/savioxavier/termlink"
+)
+
+func main() {
+	fmt.Println(termlink.SupportsHyperlinks())
+	// prints either true or false, depending on your terminal
 }
 ```
 
