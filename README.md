@@ -55,7 +55,7 @@ func main() {
 }
 ```
 
-- You can also use this package in combination with another popular Go package [fatih/color](https://github.com/fatih/color)
+- Since `termlink.Link` returns a string, you can use it with your favorite text color formatting libraries such as [fatih/color](https://github.com/fatih/color), [mgutz/ansi](https://github.com/mgutz/ansi), etc. Alternatively, you can use `termlink.ColorLink` as well.
 
 ```go
 import (
@@ -67,7 +67,7 @@ import (
 
 func main() {
 	// With fatih/color package
-	color.Cyan(termlink.Link("Example link using the colors package", "https://example.com"))
+	color.Cyan(termlink.Link("Example link using the fatih/color package", "https://example.com"))
 }
 ```
 
@@ -80,6 +80,15 @@ func main() {
 ## 🍵 Examples
 
 More examples can be found in the [`examples/`](examples/) directory.
+
+For a quick start, execute the following in your terminal
+
+```bash
+git clone https://github.com/savioxavier/termlink.git
+cd termlink/
+go get github.com/savioxavier/termlink
+go run examples/start.go
+```
 
 ---
 
