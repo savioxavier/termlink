@@ -134,6 +134,11 @@ func supportsHyperlinks() bool {
 		return true
 	}
 
+	// Terminals in JetBrains IDEs
+	if matchesEnv("TERMINAL_EMULATOR", []string{"JetBrains-JediTerm"}) {
+		return true
+	}
+
 	// Match standalone environment variables
 	// ie, those which do not require any special handling
 	// or version checking
