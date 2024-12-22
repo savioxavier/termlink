@@ -118,6 +118,8 @@ func supportsHyperlinks() bool {
 			return v.major >= 20200620
 		case "vscode":
 			return v.major > 1 || (v.major == 1 && v.minor >= 72)
+		default:
+			return false
 
 			// Hyper Terminal used to be included in this list, and it even supports hyperlinks
 			// but the hyperlinks are pseudo-hyperlinks and are actually not clickable
@@ -125,7 +127,7 @@ func supportsHyperlinks() bool {
 	}
 
 	// Terminals which have a TERM variable set
-	if matchesEnv("TERM", []string{"xterm-kitty", "xterm-256color", "alacritty", "alacritty-direct"}) {
+	if matchesEnv("TERM", []string{"xterm-kitty", "alacritty", "alacritty-direct"}) {
 		return true
 	}
 
