@@ -118,18 +118,20 @@ func supportsHyperlinks() bool {
 			return v.major >= 20200620
 		case "vscode":
 			return v.major > 1 || (v.major == 1 && v.minor >= 72)
+		case "ghostty":
+			// It is unclear when during the private beta that ghostty started supporting hyperlinks,
+			// so we'll start from the public release.
+			return v.major >= 1
+		default:
+			return false
 
 			// Hyper Terminal used to be included in this list, and it even supports hyperlinks
 			// but the hyperlinks are pseudo-hyperlinks and are actually not clickable
-		case "ghostty":
-			// it is unclear when during the private beta that ghostty started supporting hyperlinks,
-			// so we'll start from the public release.
-			return v.major >= 1
 		}
 	}
 
 	// Terminals which have a TERM variable set
-	if matchesEnv("TERM", []string{"xterm-kitty", "xterm-256color", "alacritty", "alacritty-direct", "xterm-ghostty"}) {
+	if matchesEnv("TERM", []string{"xterm-kitty", "alacritty", "alacritty-direct", "xterm-ghostty"}) {
 		return true
 	}
 
