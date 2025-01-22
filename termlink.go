@@ -122,12 +122,12 @@ func supportsHyperlinks() bool {
 			// It is unclear when during the private beta that ghostty started supporting hyperlinks,
 			// so we'll start from the public release.
 			return v.major >= 1
-
 		default:
-			// intentional fallthrough, some "terminals" (such as tmux) override TERM_PROGRAM so we need to check using other methods
-
+			return false
 			// Hyper Terminal used to be included in this list, and it even supports hyperlinks
 			// but the hyperlinks are pseudo-hyperlinks and are actually not clickable
+		case "tmux":
+			// intentional fallthrough, tmux overrides TERM_PROGRAM so we need to check using other methods
 		}
 	}
 
