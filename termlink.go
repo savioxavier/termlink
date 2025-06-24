@@ -122,8 +122,6 @@ func supportsHyperlinks() bool {
 			// It is unclear when during the private beta that ghostty started supporting hyperlinks,
 			// so we'll start from the public release.
 			return v.major >= 1
-		default:
-			return false
 
 			// Hyper Terminal used to be included in this list, and it even supports hyperlinks
 			// but the hyperlinks are pseudo-hyperlinks and are actually not clickable
