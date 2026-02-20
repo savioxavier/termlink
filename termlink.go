@@ -122,6 +122,9 @@ func supportsHyperlinks() bool {
 			// It is unclear when during the private beta that ghostty started supporting hyperlinks,
 			// so we'll start from the public release.
 			return v.major >= 1
+		case "zed":
+			// Zed uses alacritty since 0.43 release
+			return v.major > 0 || (v.major == 0 && v.minor >= 43)
 
 			// Hyper Terminal used to be included in this list, and it even supports hyperlinks
 			// but the hyperlinks are pseudo-hyperlinks and are actually not clickable
